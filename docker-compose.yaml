@@ -2,21 +2,37 @@ version: '2'
 volumes:
   psql-data:
 
-  services:
-    php-app:
-      build: ./app
-      container_name: php-app
-      depens_on:
-        - postgres
-      environment
+services:
+  php-app:
+    build: ./app
+    image: myapp
+    container_name: php-app
+    depends_on:
+      - postgres
+    environment:
+      - HOST=postgres
+      - USER=dev
+      - PASSWORD=secret
+      - DB=db
+      - PORT=5432
+    command: ["./wait-for-postgres.sh", "${HOST};${PORT},${USER},${PASSWORD}", "apache2-foreground"]
+    ports:
+      - 80:80
+    networks:
+      app-env:
 
-    postgres:
-      build: ./postgres
-      container_name: postgres 
-      volumes:
-        - psql-data:/var/lib/posgresql/data
-      environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=db
-      - MYSQL_USER=blog-user
-      - MYSQL_PASSWORD=supersecret
+  postgres:
+    image: postgres:9.6
+    container_name: postgres 
+    volumes:
+      - ./postgres/script/:/docker-entrypoint-initdb.d
+      - psql-data:/var/lib/posgresql/data
+    environment:
+      - POSTGRES_USER=dev
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=db
+    networks:
+      app-env:
+
+networks:
+  app-env:
