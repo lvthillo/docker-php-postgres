@@ -15,7 +15,7 @@ services:
       - PASSWORD=secret
       - DB=db
       - PORT=5432
-    command: ["./wait-for-postgres.sh", "${HOST};${PORT},${USER},${PASSWORD}", "apache2-foreground"]
+    command: ["./wait-for-postgres.sh", "${HOST},${PORT},${USER},${PASSWORD}", "apache2-foreground"]
     ports:
       - 80:80
     networks:
