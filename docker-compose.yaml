@@ -15,7 +15,7 @@ services:
       - PASSWORD=secret
       - DB=db
       - PORT=5432
-    command: ["./wait-for-postgres.sh", "${HOST},${PORT},${USER},${PASSWORD}", "apache2-foreground"]
+    command: ["./wait-for-postgres.sh", "$${HOST},$${PORT},$${USER},$${PASSWORD}", "apache2-foreground"]
     ports:
       - 80:80
     networks:
@@ -33,6 +33,19 @@ services:
       - POSTGRES_DB=db
     networks:
       app-env:
-
+      interface:
+  
+  pgadmin:
+    image: fenglc/pgadmin4
+    container_name: pgadmin
+    ports:
+      - 5050:5050
+    environment:
+      - DEFAULT_USER=pgadmin@mail.com
+      - DEFAULT_PASSWORD=mypassword
+    networks:
+      interface:
+    
 networks:
   app-env:
+  interface:
