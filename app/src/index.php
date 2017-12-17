@@ -1,7 +1,3 @@
-<?php
-echo "My Docker container IP is ", $_SERVER['SERVER_ADDR'];
-?>
-
 <html>
 <head>
 <style>

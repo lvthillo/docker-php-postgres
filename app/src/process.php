@@ -6,7 +6,7 @@ $lastname = $_POST['last_name'];
 $department = $_POST['department'];
 $email = $_POST['email'];
 
-$statement = $conn->prepare("INSERT INTO employees1(first_name, last_name, department, email)
+$statement = $conn->prepare("INSERT INTO employees(first_name, last_name, department, email)
     VALUES(:fname, :lname, :department, :email)");
 $statement->execute(array(
     "fname" => $firstname,

@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 volumes:
   psql-data:
 
@@ -7,15 +7,11 @@ services:
     build: ./app
     image: myapp
     container_name: php-app
+    env_file:
+      - ./env
     depends_on:
       - postgres
-    environment:
-      - HOST=postgres
-      - USER=dev
-      - PASSWORD=secret
-      - DB=db
-      - PORT=5432
-    command: ["./wait-for-postgres.sh", "$${HOST},$${PORT},$${USER},$${PASSWORD}", "apache2-foreground"]
+    command: ["./wait-for-postgres.sh", "", "apache2-foreground"]
     ports:
       - 80:80
     networks:
@@ -24,13 +20,11 @@ services:
   postgres:
     image: postgres:9.6
     container_name: postgres 
+    env_file:
+      - ./env
     volumes:
       - ./postgres/script/:/docker-entrypoint-initdb.d
       - psql-data:/var/lib/posgresql/data
-    environment:
-      - POSTGRES_USER=dev
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=db
     networks:
       app-env:
       interface:
@@ -38,6 +32,10 @@ services:
   pgadmin:
     image: fenglc/pgadmin4
     container_name: pgadmin
+    env_file:
+      - ./env
+    depends_on:
+      - postgres
     ports:
       - 5050:5050
     environment:
