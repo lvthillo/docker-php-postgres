@@ -23,6 +23,5 @@ The docker-compose.yaml is very flexible. By editing the enviroment variables in
 * POSTGRES_USER (default = dev)
 * POSTGRES_PASSWORD (default = secret)
 * POSTGRES_DB (default = db)
-* HOST (default = postgres)
 * DEFAULT_USER (default = pgadmin@mail.com)
 * DEFAULT_PASSWORD (default = mypassword)
