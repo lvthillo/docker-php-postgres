@@ -23,7 +23,7 @@ services:
     env_file:
       - ./env
     volumes:
-      - ./postgres/script/:/docker-entrypoint-initdb.d
+      - ./script/:/docker-entrypoint-initdb.d
       - psql-data:/var/lib/posgresql/data
     networks:
       app-env:
