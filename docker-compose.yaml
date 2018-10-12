@@ -38,9 +38,6 @@ services:
       - postgres
     ports:
       - 5050:5050
-    environment:
-      - DEFAULT_USER=pgadmin@mail.com
-      - DEFAULT_PASSWORD=mypassword
     networks:
       interface:
     
